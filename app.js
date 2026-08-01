@@ -98,6 +98,12 @@ function initApp() {
 
     // AI Mockup Simulation refresh
     initAiMockupRefresh();
+
+    // Setup Client Portal
+    initPortal();
+
+    // Setup Careers Modal
+    initCareers();
 }
 
 if (document.readyState === "loading") {
@@ -316,25 +322,39 @@ function initCostEstimator() {
 
     // Bind event listeners
     [originSel, destSel, weightIn, speedSel].forEach(elem => {
-        elem.addEventListener("change", updateCalculations);
-        elem.addEventListener("input", updateCalculations);
+        if (elem) {
+            elem.addEventListener("change", updateCalculations);
+            elem.addEventListener("input", updateCalculations);
+        }
     });
 
     // Trigger initial calculation
     updateCalculations();
 
     // Link estimator to Booking wizard tab transition
-    bookNowBtn.addEventListener("click", () => {
-        // Pre-fill booking fields
-        document.getElementById("bookOrigin").value = originSel.value;
-        document.getElementById("bookDest").value = destSel.value;
-        document.getElementById("bookWeight").value = weightIn.value;
-        document.getElementById("bookSpeed").value = speedSel.value;
+    if (bookNowBtn) {
+        bookNowBtn.addEventListener("click", () => {
+            // Pre-fill booking fields
+            document.getElementById("bookOrigin").value = originSel.value;
+            document.getElementById("bookDest").value = destSel.value;
+            document.getElementById("bookWeight").value = weightIn.value;
+            document.getElementById("bookSpeed").value = speedSel.value;
 
-        // Switch Tab to Booking Pane
-        switchEstimatorTab("book");
-        location.href = "#estimator";
-    });
+            // Switch Tab to Booking Pane
+            switchEstimatorTab("book");
+            location.href = "#estimator";
+        });
+    }
+
+    // Bind Tabs
+    const tabBtnEstimate = document.getElementById("tabBtnEstimate");
+    const tabBtnBook = document.getElementById("tabBtnBook");
+    if (tabBtnEstimate) {
+        tabBtnEstimate.addEventListener("click", () => switchEstimatorTab("estimate"));
+    }
+    if (tabBtnBook) {
+        tabBtnBook.addEventListener("click", () => switchEstimatorTab("book"));
+    }
 }
 
 function switchEstimatorTab(tab) {
@@ -344,21 +364,17 @@ function switchEstimatorTab(tab) {
     const paneBook = document.getElementById("paneBook");
 
     if (tab === "estimate") {
-        tabBtnEstimate.classList.add("active");
-        tabBtnBook.classList.remove("active");
-        paneEstimate.classList.add("active");
-        paneBook.classList.remove("active");
+        if (tabBtnEstimate) tabBtnEstimate.classList.add("active");
+        if (tabBtnBook) tabBtnBook.classList.remove("active");
+        if (paneEstimate) paneEstimate.classList.add("active");
+        if (paneBook) paneBook.classList.remove("active");
     } else {
-        tabBtnBook.classList.add("active");
-        tabBtnEstimate.classList.remove("active");
-        paneBook.classList.add("active");
-        paneEstimate.classList.remove("active");
+        if (tabBtnBook) tabBtnBook.classList.add("active");
+        if (tabBtnEstimate) tabBtnEstimate.classList.remove("active");
+        if (paneBook) paneBook.classList.add("active");
+        if (paneEstimate) paneEstimate.classList.remove("active");
     }
 }
-
-// Bind Tabs
-document.getElementById("tabBtnEstimate").addEventListener("click", () => switchEstimatorTab("estimate"));
-document.getElementById("tabBtnBook").addEventListener("click", () => switchEstimatorTab("book"));
 
 // ==========================================
 // 5. BOOKING MULTI-STEP WIZARD
@@ -645,24 +661,35 @@ function trackShipment(trackId) {
 // ==========================================
 // 7. CLIENT PORTALS (DASHBOARD VIEWS)
 // ==========================================
-const portalBackdrop = document.getElementById("portalBackdrop");
-const portalHeaderTitle = document.getElementById("portalHeaderTitle");
-const portalSidebarMenu = document.getElementById("portalSidebarMenu");
-const portalCloseBtn = document.getElementById("portalCloseBtn");
+let portalBackdrop;
+let portalHeaderTitle;
+let portalSidebarMenu;
+let portalCloseBtn;
 let activePortalType = ""; // "customer" or "admin"
 
-// Event listener for main Portal CTA header button
-document.getElementById("portalBtn").addEventListener("click", () => {
-    // Show option popup to select between Customer vs Admin dashboard
-    const promptAns = confirm("Press OK to enter Client Portal (Customer Dashboard).\nPress CANCEL to load regional Administrative Operations Panel.");
-    if (promptAns) {
-        openPortal("customer");
-    } else {
-        openPortal("admin");
-    }
-});
+function initPortal() {
+    portalBackdrop = document.getElementById("portalBackdrop");
+    portalHeaderTitle = document.getElementById("portalHeaderTitle");
+    portalSidebarMenu = document.getElementById("portalSidebarMenu");
+    portalCloseBtn = document.getElementById("portalCloseBtn");
 
-portalCloseBtn.addEventListener("click", closePortal);
+    const portalBtn = document.getElementById("portalBtn");
+    if (portalBtn) {
+        portalBtn.addEventListener("click", () => {
+            // Show option popup to select between Customer vs Admin dashboard
+            const promptAns = confirm("Press OK to enter Client Portal (Customer Dashboard).\nPress CANCEL to load regional Administrative Operations Panel.");
+            if (promptAns) {
+                openPortal("customer");
+            } else {
+                openPortal("admin");
+            }
+        });
+    }
+
+    if (portalCloseBtn) {
+        portalCloseBtn.addEventListener("click", closePortal);
+    }
+}
 
 function openPortal(type) {
     activePortalType = type;
@@ -915,24 +942,32 @@ function initNewsletterForm() {
 // ==========================================
 // 9. CAREER POSITIONS MODAL
 // ==========================================
-const careerModal = document.getElementById("careerModal");
-const jobModalTitle = document.getElementById("jobModalTitle");
+let careerModal;
+let jobModalTitle;
 
 function applyJob(jobTitle) {
-    careerModal.classList.add("active");
-    jobModalTitle.innerText = `Applying for: ${jobTitle}`;
+    if (careerModal) careerModal.classList.add("active");
+    if (jobModalTitle) jobModalTitle.innerText = `Applying for: ${jobTitle}`;
 }
 
 function closeCareerModal() {
-    careerModal.classList.remove("active");
+    if (careerModal) careerModal.classList.remove("active");
 }
 
-document.getElementById("careerApplyForm").addEventListener("submit", (e) => {
-    e.preventDefault();
-    alert("Application submitted successfully! Our recruiting team will follow up via email.");
-    closeCareerModal();
-    document.getElementById("careerApplyForm").reset();
-});
+function initCareers() {
+    careerModal = document.getElementById("careerModal");
+    jobModalTitle = document.getElementById("jobModalTitle");
+
+    const careerForm = document.getElementById("careerApplyForm");
+    if (careerForm) {
+        careerForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            alert("Application submitted successfully! Our recruiting team will follow up via email.");
+            closeCareerModal();
+            careerForm.reset();
+        });
+    }
+}
 
 // ==========================================
 // 10. LIVE CHAT BOT INTERFACE
