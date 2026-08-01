@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartMove Logistics | Premium AI-Powered Logistics & Freight India</title>
+    <meta name="description" content="SmartMove Logistics provides state-of-the-art logistics, smart warehousing, and express shipping across India, integrated with real-time AI route optimization.">
+    <!-- Style link -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Immediate theme set script to prevent layout flash -->
+    <script>
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    </script>
+</head>
+<body>
+
+    <!-- ==========================================
+       1. NAVIGATION HEADER
+       ========================================== -->
+    <header class="header" id="header">
+        <div class="container header-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">
+                    <i data-lucide="route"></i>
+                </div>
+                <span>Smart<span class="logo-accent">Move</span></span>
+            </a>
+            
+            <nav class="nav-menu" id="navMenu">
+                <a href="#about" class="nav-link">About</a>
+                <a href="#services" class="nav-link">Services</a>
+                <a href="#estimator" class="nav-link">Calculator</a>
+                <a href="#fleet" class="nav-link">Fleet</a>
+                <a href="#ai-tech" class="nav-link">Technology</a>
+                <a href="#pricing" class="nav-link">Pricing</a>
+                <a href="#faq" class="nav-link">FAQ</a>
+                <a href="#blog" class="nav-link">Blog</a>
+                <a href="#careers" class="nav-link">Careers</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </nav>
+
+            <div class="header-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle Light/Dark Theme">
+                    <i data-lucide="sun" class="sun-icon"></i>
+                    <i data-lucide="moon" class="moon-icon"></i>
+                </button>
+                <button class="btn btn-primary" id="portalBtn">
+                    <i data-lucide="user"></i> Client Portal
+                </button>
+                <button class="hamburger" id="hamburgerBtn" aria-label="Toggle Navigation Menu">
+                    <i data-lucide="menu"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==========================================
+       2. HERO SECTION & LIVE SHIPMENT TRACKER
+       ========================================== -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <div class="hero-badge">
+                        <i data-lucide="sparkles"></i> AI-Powered Logistics across India
+                    </div>
+                    <h1 class="hero-title">Next-Gen <span class="gradient-text">Logistics</span>, Simplified & Secured</h1>
+                    <p class="hero-desc">Experience India's premier freight and supply chain network, driven by artificial intelligence for real-time optimal routing, carbon reduction, and on-time guarantees.</p>
+                    <div class="hero-actions">
+                        <a href="#estimator" class="btn btn-primary">Book Shipment</a>
+                        <button class="btn btn-secondary" onclick="openPortal('customer')">Go to Dashboard</button>
+                    </div>
+                </div>
+
+                <div class="hero-tracker">
+                    <div class="glass-card hero-tracker-card">
+                        <h3 class="tracker-title"><i data-lucide="search"></i> Track Your Shipment</h3>
+                        <div class="tracker-form">
+                            <div class="tracker-input-wrapper">
+                                <i data-lucide="scan-barcode"></i>
+                                <input type="text" class="tracker-input" id="trackingSearchInput" placeholder="Enter Tracking ID (e.g. SMART-123-456)">
+                            </div>
+                            <button class="tracker-btn" id="trackingSearchBtn">Track</button>
+                        </div>
+                        <p class="tracker-help">Try tracking a demo shipment: <span class="tracker-demo-link" id="demoTrackLink">SMART-987-654</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dynamic Live Tracker display container -->
+            <div class="tracking-display-card" id="trackingResultPanel">
+                <div class="tracking-summary-grid">
+                    <div class="tracking-summary-item">
+                        <span class="tracking-summary-label">Tracking ID</span>
+                        <div class="tracking-summary-value" id="trackSumId">-</div>
+                    </div>
+                    <div class="tracking-summary-item">
+                        <span class="tracking-summary-label">Status</span>
+                        <div class="tracking-summary-value" id="trackSumStatus">-</div>
+                    </div>
+                    <div class="tracking-summary-item">
+                        <span class="tracking-summary-label">Estimated Delivery</span>
+                        <div class="tracking-summary-value" id="trackSumEta">-</div>
+                    </div>
+                    <div class="tracking-summary-item">
+                        <span class="tracking-summary-label">Current Location</span>
+                        <div class="tracking-summary-value" id="trackSumLocation">-</div>
+                    </div>
+                </div>
+
+                <!-- Visual Stepper Timeline -->
+                <div class="timeline-stepper">
+                    <div class="timeline-progress-bar" id="timelineProgress"></div>
+                    <div class="timeline-node" id="node-placed">
+                        <div class="timeline-icon-circle"><i data-lucide="package-plus"></i></div>
+                        <span class="timeline-title">Booked</span>
+                        <span class="timeline-desc">Order Registered</span>
+                    </div>
+                    <div class="timeline-node" id="node-transit">
+                        <div class="timeline-icon-circle"><i data-lucide="truck"></i></div>
+                        <span class="timeline-title">In Transit</span>
+                        <span class="timeline-desc">Moving to Destination</span>
+                    </div>
+                    <div class="timeline-node" id="node-out">
+                        <div class="timeline-icon-circle"><i data-lucide="package-open"></i></div>
+                        <span class="timeline-title">Out for Delivery</span>
+                        <span class="timeline-desc">Local Hub Dispatch</span>
+                    </div>
+                    <div class="timeline-node" id="node-delivered">
+                        <div class="timeline-icon-circle"><i data-lucide="check-circle-2"></i></div>
+                        <span class="timeline-title">Delivered</span>
+                        <span class="timeline-desc">Received at Destination</span>
+                    </div>
+                </div>
+
+                <!-- Log updates list -->
+                <div class="tracking-logs">
+                    <h4 class="logs-heading">Transit History Logs</h4>
+                    <div class="logs-list" id="trackingLogsList">
+                        <!-- Dynamically filled -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats ticker strip -->
+            <div class="stats-strip">
+                <div class="stat-item">
+                    <div class="stat-num" id="stat-deliveries">99.8<span>%</span></div>
+                    <div class="stat-label">On-Time Delivery Rate</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-num" id="stat-cities">350<span>+</span></div>
+                    <div class="stat-label">Cities Reached in India</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-num" id="stat-trucks">1,200<span>+</span></div>
+                    <div class="stat-label">Smart Fleet Vehicles</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-num" id="stat-co2">24<span>%</span></div>
+                    <div class="stat-label">CO2 Carbon Footprint Saved</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+       3. ABOUT US SECTION
+       ========================================== -->
+    <section class="section" id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-graphics">
+                    <div class="about-img-container" style="background-color: var(--bg-secondary); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-lg); padding: 1rem; height: 400px; display: flex; align-items: center; justify-content: center;">
+                        <svg viewBox="0 0 500 400" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
+                            <!-- Background Grid -->
+                            <defs>
+                                <pattern id="aboutGrid" width="25" height="25" patternUnits="userSpaceOnUse">
+                                    <path d="M 25 0 L 0 0 0 25" fill="none" stroke="var(--border-color)" stroke-width="0.5"/>
+                                </pattern>
+                                <linearGradient id="glowingRoute" x1="50" y1="300" x2="450" y2="100" gradientUnits="userSpaceOnUse">
+                                    <stop offset="0%" stop-color="var(--color-primary-light)" />
+                                    <stop offset="50%" stop-color="var(--color-secondary)" />
+                                    <stop offset="100%" stop-color="var(--color-accent)" />
+                                </linearGradient>
+                            </defs>
+                            <rect width="100%" height="100%" fill="var(--bg-surface)" rx="8"/>
+                            <rect width="100%" height="100%" fill="url(#aboutGrid)" rx="8"/>
+                            
+                            <!-- Glowing Route Line -->
+                            <path d="M 75 320 C 150 320, 150 200, 250 200 C 350 200, 350 80, 425 80" stroke="url(#glowingRoute)" stroke-width="4" stroke-linecap="round" fill="none" />
+                            
+                            <!-- Pulse Animation Rings & Nodes -->
+                            <!-- Node 1: Bangalore (Origin) -->
+                            <circle cx="75" cy="320" r="12" fill="#2563eb" opacity="0.2">
+                                <animate attributeName="r" values="8;16;8" dur="3s" repeatCount="indefinite" />
+                            </circle>
+                            <circle cx="75" cy="320" r="6" fill="#2563eb" />
+                            <text x="75" y="345" fill="var(--text-primary)" font-family="var(--font-heading)" font-weight="700" font-size="11" text-anchor="middle">Bangalore Hub</text>
+
+                            <!-- Node 2: Intermediate Mumbai -->
+                            <circle cx="250" cy="200" r="12" fill="#0ea5e9" opacity="0.2">
+                                <animate attributeName="r" values="8;16;8" dur="3s" begin="1s" repeatCount="indefinite" />
+                            </circle>
+                            <circle cx="250" cy="200" r="6" fill="#0ea5e9" />
+                            <text x="250" y="225" fill="var(--text-primary)" font-family="var(--font-heading)" font-weight="700" font-size="11" text-anchor="middle">Mumbai Hub</text>
+
+                            <!-- Node 3: Delhi (Destination) -->
+                            <circle cx="425" cy="80" r="12" fill="#f97316" opacity="0.2">
+                                <animate attributeName="r" values="8;16;8" dur="3s" begin="2s" repeatCount="indefinite" />
+                            </circle>
+                            <circle cx="425" cy="80" r="6" fill="#f97316" />
+                            <text x="425" y="105" fill="var(--text-primary)" font-family="var(--font-heading)" font-weight="700" font-size="11" text-anchor="middle">Delhi Hub</text>
+
+                            <!-- Moving Vehicle Indicator -->
+                            <circle cx="0" cy="0" r="7" fill="#f97316">
+                                <animateMotion path="M 75 320 C 150 320, 150 200, 250 200 C 350 200, 350 80, 425 80" dur="6s" repeatCount="indefinite" />
+                            </circle>
+                            
+                            <!-- Fleet vehicle details graph box mockup -->
+                            <g transform="translate(20, 20)">
+                                <rect width="180" height="70" rx="8" fill="var(--bg-surface)" opacity="0.9" stroke="var(--border-color)" stroke-width="1" />
+                                <text x="15" y="22" fill="#2563eb" font-family="var(--font-heading)" font-weight="700" font-size="11">TELESCOPIC TELEMETRY</text>
+                                <text x="15" y="42" fill="var(--text-secondary)" font-family="var(--font-body)" font-size="10">Active Carrier: Truck #984</text>
+                                <text x="15" y="56" fill="#10b981" font-family="var(--font-body)" font-weight="600" font-size="10">Temp Status: Optimal (4°C)</text>
+                            </g>
+                        </svg>
+                    </div>
+                    <div class="glass-card about-floating-badge">
+                        <i data-lucide="award"></i>
+                        <h3>National Excellence</h3>
+                        <p>Awarded Logistics Startup of the Year by India Innovation Forum.</p>
+                    </div>
+                </div>
+                
+                <div class="about-content">
+                    <span class="section-tag">About Our Startup</span>
+                    <h2 class="section-title">Revolutionizing Indian Freight with DeepTech</h2>
+                    <p class="section-desc">SmartMove Logistics was founded to bridge the gap between traditional freight operations and modern intelligent systems. By integrating internet-of-things (IoT) tracking sensors and predictive artificial intelligence algorithms, we offer a transparent, reliable, and hyper-efficient transport infrastructure across India's industrial centers.</p>
+                    
+                    <div class="about-features">
+                        <div class="about-feature-item">
+                            <div class="about-feature-icon">
+                                <i data-lucide="shield-check"></i>
+                            </div>
+                            <div>
+                                <h4 class="about-feature-title">Cargo Protection</h4>
+                                <p class="about-feature-desc">Transit security with automated smart lockers, CCTV inside fleet cargo areas, and cargo insurance.</p>
+                            </div>
+                        </div>
+                        <div class="about-feature-item">
+                            <div class="about-feature-icon">
+                                <i data-lucide="leaf"></i>
+                            </div>
+                            <div>
+                                <h4 class="about-feature-title">Green Supply Chain</h4>
+                                <p class="about-feature-desc">Active carbon offsets and growing deployment of fully-electric distribution fleet vehicles.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+       4. SERVICES SECTION
+       ========================================== */ -->
+    <section class="section services" id="services">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Our Services</span>
+                <h2 class="section-title">Industrial Logistics Solutions Built For Speed</h2>
+                <p class="section-desc">From small retail parcels to massive machinery shipping, SmartMove Logistics delivers precision across all channels.</p>
+            </div>
+
+            <div class="services-grid">
+                <div class="glass-card service-card">
+                    <div class="service-icon"><i data-lucide="plane-takeoff"></i></div>
+                    <h3 class="service-title">Express Air Freight</h3>
+                    <p class="service-desc">Next-day flight shipping service linking Tier-1 metro airports with dedicated loading blocks and high priority processing.</p>
+                    <a href="#estimator" class="service-link">Calculate Air Rate <i data-lucide="arrow-right"></i></a>
+                </div>
+
+                <div class="glass-card service-card">
+                    <div class="service-icon"><i data-lucide="truck"></i></div>
+                    <h3 class="service-title">Smart Road Freight</h3>
+                    <p class="service-desc">Hub-to-hub national highway transport with GPS route trackers, cargo safety seals, and multi-axle carrier trucks.</p>
+                    <a href="#estimator" class="service-link">Calculate Road Rate <i data-lucide="arrow-right"></i></a>
+                </div>
+
+                <div class="glass-card service-card">
+                    <div class="service-icon"><i data-lucide="warehouse"></i></div>
+                    <h3 class="service-title">AI Warehousing</h3>
+                    <p class="service-desc">Smart fulfillment hubs located near Mumbai, Bangalore, and Delhi, featuring robot sorting assists and stock tracking.</p>
+                    <a href="#contact" class="service-link">Get Warehouse Quote <i data-lucide="arrow-right"></i></a>
+                </div>
+
+                <div class="glass-card service-card">
+                    <div class="service-icon"><i data-lucide="thermometer-snowflake"></i></div>
+                    <h3 class="service-title">Cold Chain Fleet</h3>
+                    <p class="service-desc">FSSAI-certified refrigerated storage containers for temperature-critical pharmaceutical and organic goods shipping.</p>
+                    <a href="#contact" class="service-link">Contact Cold Chain Expert <i data-lucide="arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+       5. COST ESTIMATOR & QUICK BOOKING FORM
+       ========================================== -->
+    <section class="section" id="estimator">
+        <div class="container estimator-container">
+            <div class="section-header">
+                <span class="section-tag">Calculate & Book</span>
+                <h2 class="section-title">Get Instant Price Estimates & Ship Instantly</h2>
+                <p class="section-desc">Select whether you want to calculate simulated shipping rates or submit a fast cargo booking directly to our tracking pipeline.</p>
+            </div>
+
+            <!-- Double Tab Navigator -->
+            <div class="estimator-tabs">
+                <button class="estimator-tab-btn active" id="tabBtnEstimate"><i data-lucide="calculator"></i> Cost Estimator</button>
+                <button class="estimator-tab-btn" id="tabBtnBook"><i data-lucide="file-text"></i> Quick Booking Form</button>
+            </div>
+
+            <!-- Tab Pane 1: Cost Estimator -->
+            <div class="estimator-pane active" id="paneEstimate">
+                <div class="estimator-grid">
+                    <div class="glass-card hero-tracker-card" style="padding:2.5rem; text-align:left;">
+                        <h3 style="margin-bottom:1.5rem;"><i data-lucide="calculator" style="color:var(--color-primary-light); vertical-align:middle; margin-right:0.5rem;"></i> Rate Calculator</h3>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="estOrigin">Origin City (India)</label>
+                            <select class="form-control" id="estOrigin">
+                                <option value="Mumbai">Mumbai (MH)</option>
+                                <option value="Delhi" selected>Delhi (NCR)</option>
+                                <option value="Bangalore">Bangalore (KA)</option>
+                                <option value="Chennai">Chennai (TN)</option>
+                                <option value="Kolkata">Kolkata (WB)</option>
+                                <option value="Hyderabad">Hyderabad (TG)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="estDest">Destination City (India)</label>
+                            <select class="form-control" id="estDest">
+                                <option value="Mumbai" selected>Mumbai (MH)</option>
+                                <option value="Delhi">Delhi (NCR)</option>
+                                <option value="Bangalore">Bangalore (KA)</option>
+                                <option value="Chennai">Chennai (TN)</option>
+                                <option value="Kolkata">Kolkata (WB)</option>
+                                <option value="Hyderabad">Hyderabad (TG)</option>
+                            </select>
+                        </div>
+
+                        <div class="estimator-grid" style="grid-template-columns:1fr 1fr; gap:1rem; padding:0; margin-bottom:1rem;">
+                            <div class="form-group" style="margin-bottom:0;">
+                                <label class="form-label" for="estWeight">Weight (kg)</label>
+                                <input type="number" class="form-control" id="estWeight" value="10" min="1">
+                            </div>
+                            <div class="form-group" style="margin-bottom:0;">
+                                <label class="form-label" for="estSpeed">Speed Tier</label>
+                                <select class="form-control" id="estSpeed">
+                                    <option value="standard">Standard Road (3-5 Days)</option>
+                                    <option value="express">Express Air (1-2 Days)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="calculator-results">
+                        <h4 class="result-heading">Estimated Cost Breakdown</h4>
+                        <div class="price-display" id="estFinalPrice">₹ 450.00</div>
+                        <div class="price-subtext">Subject to fuel surcharge changes. Includes standard insurance coverage.</div>
+                        
+                        <div class="result-breakdown">
+                            <div class="breakdown-row">
+                                <span>Base Freight Fare:</span>
+                                <span id="estBaseFare">₹ 350.00</span>
+                            </div>
+                            <div class="breakdown-row">
+                                <span>GST (18%):</span>
+                                <span id="estGst">₹ 63.00</span>
+                            </div>
+                            <div class="breakdown-row">
+                                <span>Fuel & Handling Levy:</span>
+                                <span id="estFuel">₹ 37.00</span>
+                            </div>
+                            <div class="breakdown-row total">
+                                <span>Total Estimated Amount:</span>
+                                <span id="estTotal">₹ 450.00</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-accent" id="estBookNowBtn">Proceed with this Estimate</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Pane 2: Steps Booking Form -->
+            <div class="estimator-pane" id="paneBook">
+                <div class="booking-stepper">
+                    <div class="booking-step-line" id="stepperProgressLine"></div>
+                    <div class="step-node active" id="bookStepIndicator-1">
+                        <div class="step-circle">1</div>
+                        <span class="step-label">Details</span>
+                    </div>
+                    <div class="step-node" id="bookStepIndicator-2">
+                        <div class="step-circle">2</div>
+                        <span class="step-label">Addresses</span>
+                    </div>
+                    <div class="step-node" id="bookStepIndicator-3">
+                        <div class="step-circle">3</div>
+                        <span class="step-label">Confirm</span>
+                    </div>
+                </div>
+
+                <div class="booking-form-panel">
+                    <!-- Step 1: Weight & Speed -->
+                    <div class="booking-form-step active" id="bookFormStep-1">
+                        <h3 style="margin-bottom:1.5rem;">Shipment Details</h3>
+                        <div class="estimator-grid" style="grid-template-columns:1fr 1fr; gap:1.5rem; text-align:left;">
+                            <div class="form-group">
+                                <label class="form-label" for="bookOrigin">Origin City</label>
+                                <select class="form-control" id="bookOrigin">
+                                    <option value="Mumbai">Mumbai (MH)</option>
+                                    <option value="Delhi" selected>Delhi (NCR)</option>
+                                    <option value="Bangalore">Bangalore (KA)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="bookDest">Destination City</label>
+                                <select class="form-control" id="bookDest">
+                                    <option value="Mumbai" selected>Mumbai (MH)</option>
+                                    <option value="Delhi">Delhi (NCR)</option>
+                                    <option value="Bangalore">Bangalore (KA)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="estimator-grid" style="grid-template-columns:1fr 1fr; gap:1.5rem; text-align:left;">
+                            <div class="form-group">
+                                <label class="form-label" for="bookWeight">Cargo Weight (kg)</label>
+                                <input type="number" class="form-control" id="bookWeight" value="12" min="1">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="bookSpeed">Shipping Speed</label>
+                                <select class="form-control" id="bookSpeed">
+                                    <option value="standard">Standard Road (3-5 Days)</option>
+                                    <option value="express">Express Air (1-2 Days)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Addresses -->
+                    <div class="booking-form-step" id="bookFormStep-2">
+                        <h3 style="margin-bottom:1.5rem;">Sender & Receiver Info</h3>
+                        <div class="estimator-grid" style="grid-template-columns:1fr 1fr; gap:2rem;">
+                            <!-- Sender Column -->
+                            <div>
+                                <h4 style="margin-bottom:1rem; border-bottom:1px solid var(--border-color); padding-bottom:0.5rem; color:var(--color-primary-light);">Sender Details</h4>
+                                <div class="form-group">
+                                    <label class="form-label" for="senderName">Sender Full Name</label>
+                                    <input type="text" class="form-control" id="senderName" placeholder="Rajesh Sharma">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="senderPhone">Phone Number</label>
+                                    <input type="tel" class="form-control" id="senderPhone" placeholder="+91 98765 43210">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="senderAddress">Full Street Address</label>
+                                    <textarea class="form-control" id="senderAddress" rows="2" placeholder="Sector 15, Dwarka"></textarea>
+                                </div>
+                            </div>
+                            <!-- Receiver Column -->
+                            <div>
+                                <h4 style="margin-bottom:1rem; border-bottom:1px solid var(--border-color); padding-bottom:0.5rem; color:var(--color-accent);">Receiver Details</h4>
+                                <div class="form-group">
+                                    <label class="form-label" for="receiverName">Receiver Full Name</label>
+                                    <input type="text" class="form-control" id="receiverName" placeholder="Anjali Nair">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="receiverPhone">Phone Number</label>
+                                    <input type="tel" class="form-control" id="receiverPhone" placeholder="+91 98123 45678">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="receiverAddress">Full Street Address</label>
+                                    <textarea class="form-control" id="receiverAddress" rows="2" placeholder="Indiranagar, 100 Feet Rd"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Confirmation -->
+                    <div class="booking-form-step" id="bookFormStep-3">
+                        <h3 style="margin-bottom:1rem;">Booking Summary</h3>
+                        <p style="color:var(--text-secondary); margin-bottom:2.25rem;">Verify the routing details below and proceed to pay. Payment is simulated.</p>
+                        
+                        <div style="background-color:var(--bg-secondary); border-radius:var(--radius-md); padding:1.5rem; margin-bottom:2rem; text-align:left;">
+                            <div class="estimator-grid" style="grid-template-columns:1fr 1fr; gap:1.5rem;">
+                                <div>
+                                    <p><strong>Route:</strong> <span id="summaryRoute">-</span></p>
+                                    <p><strong>Weight & Speed:</strong> <span id="summaryWeightSpeed">-</span></p>
+                                </div>
+                                <div>
+                                    <p><strong>Sender:</strong> <span id="summarySender">-</span></p>
+                                    <p><strong>Receiver:</strong> <span id="summaryReceiver">-</span></p>
+                                </div>
+                            </div>
+                            <div style="margin-top:1.5rem; font-size:1.25rem; font-weight:700; border-top:1px dashed var(--border-color); padding-top:1rem; text-align:right;">
+                                Final Cost: <span style="color:var(--color-primary-light);" id="summaryCost">₹ 0.00</span>
+                            </div>
+                        </div>
+
+                        <!-- Simulated checkout -->
+                        <div style="background-color:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.2); border-radius:var(--radius-md); padding:1.25rem; display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
+                            <i data-lucide="credit-card" style="color:var(--color-success); width:32px; height:32px;"></i>
+                            <div style="text-align:left;">
+                                <h4 style="font-size:0.9375rem; font-weight:700;">Secure UPI/Card Gateway Integration Mock</h4>
+                                <p style="font-size:0.75rem; color:var(--text-muted);">Pressing pay triggers automated client database injection and sets tracking logs to active status.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="booking-actions">
+                        <button class="btn btn-secondary" id="bookBtnPrev" style="visibility: hidden;"><i data-lucide="arrow-left"></i> Back</button>
+                        <button class="btn btn-accent" id="bookBtnNext">Continue <i data-lucide="arrow-right"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+       6. AI & TECHNOLOGY SPOTLIGHT
+       ========================================== -->
+    <section class="section ai-tech" id="ai-tech">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">AI & Technology</span>
+                <h2 class="section-title">DeepTech Logistics Infrastructure</h2>
+                <p class="section-desc">We operate using artificial intelligence algorithms that adapt instantly to India's dynamic traffic and warehouse environments.</p>
+            </div>
+
+            <div class="tech-grid">
+                <div class="tech-cards-grid">
+                    <div class="glass-card tech-card">
+                        <div class="tech-icon"><i data-lucide="milestone"></i></div>
+                        <h3 class="tech-title">AI Dynamic Route Maps</h3>
+                        <p class="tech-desc">Bypasses highway jams and monsoon blockages in real-time by recalculating secondary road options every 90 seconds.</p>
+                    </div>
+
+                    <div class="glass-card tech-card">
+                        <div class="tech-icon"><i data-lucide="boxes"></i></div>
+                        <h3 class="tech-title">Automated Sorting</h3>
+                        <p class="tech-desc">Reduces transit processing times by 40% using warehouse camera networks that categorize package dimensions dynamically.</p>
+                    </div>
+
+                    <div class="glass-card tech-card">
+                        <div class="tech-icon"><i data-lucide="line-chart"></i></div>
+                        <h3 class="tech-title">Demand Prediction</h3>
+                        <p class="tech-desc">Forecasts delivery surges across commercial centers like Mumbai to pre-allocate courier vans, maintaining a 99% guarantee rate.</p>
+                    </div>
+
+                    <div class="glass-card tech-card">
+                        <div class="tech-icon"><i data-lucide="cpu"></i></div>
+                        <h3 class="tech-title">IoT Telematics</h3>
+                        <p class="tech-desc">Provides real-time updates on freight temperature, container vibration metrics, and security lock indicators.</p>
+                    </div>
+                </div>
+
+                <div class="glass-card tech-visual-mockup">
+                    <div class="mockup-header">
+                        <div class="mockup-dots">
+                            <div class="mockup-dot"></div>
+                            <div class="mockup-dot"></div>
+                            <div class="mockup-dot"></div>
+                        </div>
+                        <span class="mockup-title">AI ROUTING EFFICIENCY SIMULATION</span>
+                        <i data-lucide="refresh-cw" style="color:var(--text-muted); cursor:pointer;" id="mockupRefresh"></i>
+                    </div>
+
+                    <!-- Interactive Mockup Chart -->
+                    <div class="mockup-chart-container">
+                        <div class="mockup-bar" id="mockBar-1" data-val="12m" style="height: 65%;"></div>
+                        <div class="mockup-bar" id="mockBar-2" data-val="8m" style="height: 40%;"></div>
+                        <div class="mockup-bar" id="mockBar-3" data-val="23m" style="height: 90%;"></div>
+                        <div class="mockup-bar" id="mockBar-4" data-val="14m" style="height: 55%;"></div>
+                        <div class="mockup-bar" id="mockBar-5" data-val="5m" style="height: 25%;"></div>
+                    </div>
+
+                    <div class="mockup-grid-stats">
+                        <div class="mockup-stat-box">
+                            <div class="mockup-stat-val" id="mockStatLoss">18.4%</div>
+                            <div class="mockup-stat-lbl">Fuel Saved</div>
+                        </div>
+                        <div class="mockup-stat-box">
+                            <div class="mockup-stat-val" id="mockStatTime">-2.4hr</div>
+                            <div class="mockup-stat-lbl">Transit Delta</div>
+                        </div>
+                        <div class="mockup-stat-box">
+                            <div class="mockup-stat-val">Active</div>
+                            <div class="mockup-stat-lbl">Auto-Dispatch</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+       7. FLEET SHOWCASE
+       ========================================== -->
+    <section class="section" id="fleet">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Modern Fleet</span>
+                <h2 class="section-title">The SmartMove Fleet Portfolio</h2>
+                <p class="section-desc">Our distribution fleet is optimized for low emissions and high reliability, spanning air, highway, and local networks.</p>
+            </div>
+
+            <div class="fleet-grid">
+                <!-- Fleet Card 1 -->
+                <div class="glass-card fleet-card">
+                    <div class="fleet-image-wrapper">
+                        <i data-lucide="truck"></i>
+                        <span class="fleet-badge">Electric</span>
+                    </div>
+                    <div class="fleet-content">
+                        <h3 class="fleet-title">Smart Cargo EV Van</h3>
+                        <p class="fleet-desc">Assigned to hyper-local city delivery zones. Offers zero emission footprints and silent operation in crowded neighborhoods.</p>
+                        <div class="fleet-specs">
+                            <div class="fleet-spec-item">Range<strong>240 km</strong></div>
+                            <div class="fleet-spec-item">Capacity<strong>1.5 Tons</strong></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fleet Card 2 -->
+                <div class="glass-card fleet-card">
+                    <div class="fleet-image-wrapper">
+                        <i data-lucide="truck-tower"></i>
+                        <span class="fleet-badge">Heavy Duty</span>
+                    </div>
+                    <div class="fleet-content">
+                        <h3 class="fleet-title">Multi-Axle Cargo Truck</h3>
+                        <p class="fleet-desc">The backbone of our national highway corridors. Equipped with ADAS safety assists and real-time smart locks.</p>
+                        <div class="fleet-specs">
+                            <div class="fleet-spec-item">Power<strong>440 HP</strong></div>
+                            <div class="fleet-spec-item">Capacity<strong>32 Tons</strong></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fleet Card 3 -->
+                <div class="glass-card fleet-card">
+                    <div class="fleet-image-wrapper">
+                        <i data-lucide="plane"></i>
+                        <span class="fleet-badge">Express Air</span>
+                    </div>
+                    <div class="fleet-content">
+                        <h3 class="fleet-title">Air Cargo Boeing 737</h3>
+                        <p class="fleet-desc">Connecting major freight airport hubs. Guarantees overnight delivery of critical electronics and medical assets.</p>
+                        <div class="fleet-specs">
+                            <div class="fleet-spec-item">Cruising Speed<strong>850 km/h</strong></div>
+                            <div class="fleet-spec-item">Capacity<strong>20 Tons</strong></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+       8. INDUSTRIES WE SERVE
+       ========================================== -->
+    <section class="section services" id="industries">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Target Industries</span>
+                <h2 class="section-title">Logistics Infrastructure For Every Sector</h2>
+                <p class="section-desc">We tailor our supply chains to meet the compliance and speeds required by different business models.</p>
+            </div>
+
+            <div class="industries-grid">
+                <div class="glass-card industry-card">
+                    <div class="industry-icon"><i data-lucide="shopping-bag"></i></div>
+                    <h4 class="industry-title">E-Commerce</h4>
+                </div>
+                <div class="glass-card industry-card">
+                    <div class="industry-icon"><i data-lucide="heart-pulse"></i></div>
+                    <h4 class="industry-title">Healthcare</h4>
+                </div>
+                <div class="glass-card industry-card">
+                    <div class="industry-icon"><i data-lucide="factory"></i></div>
+                    <h4 class="industry-title">Manufacturing</h4>
+                </div>
+                <div class="glass-card industry-card">
+                    <div class="industry-icon"><i data-lucide="store"></i></div>
+                    <h4 class="industry-title">Retail Networks</h4>
+                </div>
+                <div class="glass-card industry-card">
+                    <div class="industry-icon"><i data-lucide="wrench"></i></div>
+                    <h4 class="industry-title">Automotive</h4>
+                </div>
+                <div class="glass-card industry-card">
+                    <div class="industry-icon"><i data-lucide="sprout"></i></div>
+                    <h4 class="industry-title">Agriculture</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+       9. PRICING SECTION
+       ========================================== -->
+    <section class="section pricing" id="pricing">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Pricing Plans</span>
+                <h2 class="section-title">Flexible Pricing Options For Growth</h2>
+                <p class="section-desc">Choose a tier that matches your shipment frequency. Scale up or down at any time.</p>
+            </div>
+
+            <div class="pricing-grid">
+                <!-- Starter Plan -->
+                <div class="pricing-card">
+                    <div class="pricing-tier">Starter Lite</div>
+                    <div class="pricing-price">₹ 4,999<span>/mo</span></div>
+                    <p class="pricing-desc">Perfect for small local D2C shops starting out.</p>
+                    <div class="pricing-features">
+                        <div class="pricing-feature-item"><i data-lucide="check"></i> Up to 50 shipments / mo</div>
+                        <div class="pricing-feature-item"><i data-lucide="check"></i> Standard road transport delivery</div>
+                        <div class="pricing-feature-item"><i data-lucide="check"></i> Basic tracking dashboards</div>
+                        <div class="pricing-feature-item"><i data-lucide="check"></i> Email support</div>
+                    </div>
+                    <button class="btn btn-secondary" style="width:100%;">Select Plan</button>
+                </div>
+
+                <!-- Business Plan -->
+                <div class="pricing-card popular">
+                    <div class="pricing-tier" style="color:var(--color-primary-light);">Business Pro</div>
+                    <div class="pricing-price">₹ 24,999<span>/mo</span></div>
+                    <p class="pricing-desc">For growing industrial firms needing express air options.</p>
+                    <div class="pricing-features">
+                        <div class="pricing-feature-item"><i data-lucide="check"></i> Up to 350 shipments / mo</div>
+                        <div class="pricing-feature-item"><i data-lucide="check"></i> Express air shipping eligibility</div>
+                        <div class="pricing-feature-item"><i data-lucide="check"></i> AI Route Optimization options</div>
+                        <div class="pricing-feature-item"><i data-lucide="check"></i> 24/7 Dedicated chat support</div>
+                    </div>
+                    <button class="btn btn-primary" style="width:100%;">Select Plan</button>
+                </div>
+
+                <!-- Enterprise Plan -->
+                <div class="pricing-card">
+                    <div class="pricing-tier">Custom Enterprise</div>
+                    <div class="pricing-price">Contact Us</div>
+                    <p class="pricing-desc">Custom integrations for massive e-commerce operations.</p>
+                    <div class="pricing-features">
+                        <div class="pricing-feature-item"><i data-lucide="check"></i> Unlimited monthly shipments</div>
+                        <div class="pricing-feature-item"><i data-lucide="check"></i> Dedicated warehouse sectors</div>
+                        <div class="pricing-feature-item"><i data-lucide="check"></i> API database integrations</div>
+                        <div class="pricing-feature-item"><i data-lucide="check"></i> Dedicated Account Manager</div>
+                    </div>
+                    <button class="btn btn-secondary" style="width:100%;" onclick="location.href='#contact'">Contact Sales</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+       10. TESTIMONIALS SECTION
+       ========================================== -->
+    <section class="section" id="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Client Feedback</span>
+                <h2 class="section-title">Trusted By Leading Founders</h2>
+                <p class="section-desc">Read reviews from business owners across India who transformed their operations with SmartMove.</p>
+            </div>
+
+            <div class="testimonials-container">
+                <div class="testimonial-track">
+                    <!-- Slide 1 -->
+                    <div class="testimonial-slide active" id="slide-0">
+                        <p class="testimonial-quote">"SmartMove Logistics solved our delivery delays into North India. Their automated route redirection is excellent. We saw transit times fall by 28% in our first month."</p>
+                        <div class="testimonial-avatar">AK</div>
+                        <h4 class="testimonial-author">Arjun Kapoor</h4>
+                        <span class="testimonial-role">Founder, Kapoor Electronics (Delhi)</span>
+                    </div>
+                    <!-- Slide 2 -->
+                    <div class="testimonial-slide" id="slide-1">
+                        <p class="testimonial-quote">"Their cold-chain pharmaceuticals transport is highly reliable. We get temperature telemetry updates directly, ensuring clinical sample viability every time."</p>
+                        <div class="testimonial-avatar">PM</div>
+                        <h4 class="testimonial-author">Dr. Priya Mehta</h4>
+                        <span class="testimonial-role">Director, BioHealth Labs (Mumbai)</span>
+                    </div>
+                    <!-- Slide 3 -->
+                    <div class="testimonial-slide" id="slide-2">
+                        <p class="testimonial-quote">"The API integration with our Shopify store took less than an day. Now customer tracking emails trigger instantly, reducing support tickets significantly."</p>
+                        <div class="testimonial-avatar">SR</div>
+                        <h4 class="testimonial-author">Siddharth Rao</h4>
+                        <span class="testimonial-role">Operations Lead, Trendz Apparel (Bangalore)</span>
+                    </div>
+                </div>
+
+                <div class="testimonial-nav">
+                    <button class="testimonial-nav-btn" id="testimonialPrev" aria-label="Previous Testimonial"><i data-lucide="chevron-left"></i></button>
+                    <button class="testimonial-nav-btn" id="testimonialNext" aria-label="Next Testimonial"><i data-lucide="chevron-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+       11. FAQ ACCORDION SECTION
+       ========================================== -->
+    <section class="section services" id="faq">
+        <div class="container">
+            <div class="faq-grid">
+                <div class="faq-visual">
+                    <i data-lucide="help-circle"></i>
+                    <h3>Frequently Asked Questions</h3>
+                    <p>Have questions about weight limits, routes, or customs regulations? Let us guide you.</p>
+                    <button class="btn btn-accent" onclick="location.href='#contact'">Ask Custom Question</button>
+                </div>
+
+                <div>
+                    <!-- Accordion Item 1 -->
+                    <div class="accordion-item active" onclick="toggleFaq(this)">
+                        <div class="accordion-header">
+                            <span>How does your AI routing optimize shipment delivery?</span>
+                            <span class="accordion-icon">+</span>
+                        </div>
+                        <div class="accordion-body">
+                            <p>Our routing engines analyze traffic density data from national highway APIs, weather forecasts, and historical delay indexes. When blockages occur, our system dynamically generates alternative directions and alerts drivers via the dispatcher portal.</p>
+                        </div>
+                    </div>
+
+                    <!-- Accordion Item 2 -->
+                    <div class="accordion-item" onclick="toggleFaq(this)">
+                        <div class="accordion-header">
+                            <span>Which cities do you support for express air freight?</span>
+                            <span class="accordion-icon">+</span>
+                        </div>
+                        <div class="accordion-body">
+                            <p>Currently, express air delivery supports airport-to-airport routes connecting Mumbai, Delhi, Bangalore, Chennai, Kolkata, Hyderabad, and Pune. We offer last-mile hub transport for adjacent locations within 100km.</p>
+                        </div>
+                    </div>
+
+                    <!-- Accordion Item 3 -->
+                    <div class="accordion-item" onclick="toggleFaq(this)">
+                        <div class="accordion-header">
+                            <span>Is cargo insurance included in bookings?</span>
+                            <span class="accordion-icon">+</span>
+                        </div>
+                        <div class="accordion-body">
+                            <p>All standard bookings include default transit liability coverage up to ₹10,000. For higher value commercial assets, you can select premium comprehensive protection during step 2 of our booking portal, covering damages up to ₹5,00,000.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+       12. BLOG & UPDATES SECTION
+       ========================================== -->
+    <section class="section" id="blog">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">LogTech Insights</span>
+                <h2 class="section-title">Latest Logistics Research & News</h2>
+                <p class="section-desc">Keep up with the fast-moving logistics landscape, optimization techniques, and commercial trends in India.</p>
+            </div>
+
+            <div class="blog-grid">
+                <!-- Blog Card 1 -->
+                <div class="glass-card blog-card">
+                    <div class="blog-img-placeholder"><i data-lucide="leaf"></i></div>
+                    <div class="blog-content">
+                        <span class="blog-meta">August 2026 | Green Freight</span>
+                        <h3 class="blog-title">Transitioning India's Logistics to Net-Zero</h3>
+                        <p class="blog-desc">An in-depth analysis of how deploying electric delivery vans across Mumbai decreases urban carbon loads while cutting operational fuels.</p>
+                        <a href="#" class="service-link">Read Full Report <i data-lucide="arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- Blog Card 2 -->
+                <div class="glass-card blog-card">
+                    <div class="blog-img-placeholder"><i data-lucide="cpu"></i></div>
+                    <div class="blog-content">
+                        <span class="blog-meta">July 2026 | AI & Tech</span>
+                        <h3 class="blog-title">Predictive Routing Algorithms for Monsoons</h3>
+                        <p class="blog-desc">How neural models digest rainfall radars to predict highway washouts in the Western Ghats before transport trucks depart hubs.</p>
+                        <a href="#" class="service-link">Read Full Report <i data-lucide="arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- Blog Card 3 -->
+                <div class="glass-card blog-card">
+                    <div class="blog-img-placeholder"><i data-lucide="trending-up"></i></div>
+                    <div class="blog-content">
+                        <span class="blog-meta">June 2026 | Infrastructure</span>
+                        <h3 class="blog-title">E-Commerce Shifts into Tier-3 Cities</h3>
+                        <p class="blog-desc">Evaluating India's PM Gati Shakti national master plan and its positive impacts on rural last-mile logistics efficiencies.</p>
+                        <a href="#" class="service-link">Read Full Report <i data-lucide="arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+       13. CAREERS SECTION
+       ========================================== -->
+    <section class="section services" id="careers">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Join the Team</span>
+                <h2 class="section-title">Open Positions at SmartMove</h2>
+                <p class="section-desc">We are looking for innovators, operations managers, and software engineers to shape the future of logistics in India.</p>
+            </div>
+
+            <div class="careers-grid">
+                <!-- Job Card 1 -->
+                <div class="glass-card job-card">
+                    <span class="job-type">Engineering</span>
+                    <h3 class="job-title">Senior AI Logistics Engineer</h3>
+                    <div class="job-meta">
+                        <span><i data-lucide="map-pin"></i> Bangalore (Hybrid)</span>
+                        <span><i data-lucide="briefcase"></i> Full-Time</span>
+                    </div>
+                    <p class="job-desc">Lead the refinement of our dynamic vehicle routing algorithms and multi-agent dispatch simulators.</p>
+                    <button class="btn btn-secondary" onclick="applyJob('Senior AI Logistics Engineer')">Apply Now</button>
+                </div>
+
+                <!-- Job Card 2 -->
+                <div class="glass-card job-card">
+                    <span class="job-type">Operations</span>
+                    <h3 class="job-title">National Hub Dispatcher</h3>
+                    <div class="job-meta">
+                        <span><i data-lucide="map-pin"></i> Delhi (On-Site)</span>
+                        <span><i data-lucide="briefcase"></i> Full-Time</span>
+                    </div>
+                    <p class="job-desc">Manage regional fleet dispatches, handle exceptions, and interface with our AI system controllers.</p>
+                    <button class="btn btn-secondary" onclick="applyJob('National Hub Dispatcher')">Apply Now</button>
+                </div>
+
+                <!-- Job Card 3 -->
+                <div class="glass-card job-card">
+                    <span class="job-type">Product</span>
+                    <h3 class="job-title">Supply Chain Product Lead</h3>
+                    <div class="job-meta">
+                        <span><i data-lucide="map-pin"></i> Mumbai (Hybrid)</span>
+                        <span><i data-lucide="briefcase"></i> Full-Time</span>
+                    </div>
+                    <p class="job-desc">Direct development of our customer client portal, admin dashboard metrics, and telemetry UI trackers.</p>
+                    <button class="btn btn-secondary" onclick="applyJob('Supply Chain Product Lead')">Apply Now</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+       14. CONTACT SECTION
+       ========================================== -->
+    <section class="section" id="contact">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info-panel">
+                    <span class="section-tag">Contact Us</span>
+                    <h2 class="contact-title">Let's Discuss Your Supply Chain Requirements</h2>
+                    <p class="contact-desc">Whether you have questions about custom volume prices, tracking integrations, or API setups, our team is ready to assist.</p>
+                    
+                    <div class="contact-details">
+                        <div class="contact-detail-item">
+                            <div class="contact-detail-icon"><i data-lucide="map-pin"></i></div>
+                            <div class="contact-detail-content">
+                                <h4>Headquarters</h4>
+                                <p>8th Floor, LogTech Towers, MG Road, Bangalore, KA - 560001</p>
+                            </div>
+                        </div>
+                        <div class="contact-detail-item">
+                            <div class="contact-detail-icon"><i data-lucide="mail"></i></div>
+                            <div class="contact-detail-content">
+                                <h4>Corporate Email</h4>
+                                <p>solutions@smartmovelogistics.com</p>
+                            </div>
+                        </div>
+                        <div class="contact-detail-item">
+                            <div class="contact-detail-icon"><i data-lucide="phone"></i></div>
+                            <div class="contact-detail-content">
+                                <h4>Customer Helpline</h4>
+                                <p>+91 (80) 4900-5000 (Mon-Sat, 9AM - 6PM)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card contact-form-panel">
+                    <h3 style="margin-bottom:1.5rem;"><i data-lucide="mail" style="color:var(--color-accent); vertical-align:middle; margin-right:0.5rem;"></i> Send a Message</h3>
+                    
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label class="form-label" for="contactName">Full Name</label>
+                            <input type="text" class="form-control" id="contactName" required placeholder="Vikram Malhotra">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="contactEmail">Business Email</label>
+                            <input type="email" class="form-control" id="contactEmail" required placeholder="vikram@manufacturing.com">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="contactMessage">Describe Your Requirements</label>
+                            <textarea class="form-control" id="contactMessage" rows="4" required placeholder="Hello, we ship parts from Pune to Chennai weekly..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-accent" style="width:100%;">Submit Inquiry</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+       15. FOOTER SECTION
+       ========================================== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <a href="#" class="footer-logo">
+                        <div class="logo-icon"><i data-lucide="route"></i></div>
+                        <span>Smart<span class="logo-accent">Move</span></span>
+                    </a>
+                    <p class="footer-desc">Building the intelligent infrastructure layer for logistics across India. Integrating AI, IoT, and green transport pipelines.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-btn" aria-label="LinkedIn Link"><i data-lucide="linkedin"></i></a>
+                        <a href="#" class="social-btn" aria-label="Twitter Link"><i data-lucide="twitter"></i></a>
+                        <a href="#" class="social-btn" aria-label="Facebook Link"><i data-lucide="facebook"></i></a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="footer-heading">Navigations</h4>
+                    <div class="footer-links">
+                        <a href="#" class="footer-link">Home</a>
+                        <a href="#about" class="footer-link">About Us</a>
+                        <a href="#services" class="footer-link">Services</a>
+                        <a href="#fleet" class="footer-link">Modern Fleet</a>
+                        <a href="#careers" class="footer-link">Careers</a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="footer-heading">Services</h4>
+                    <div class="footer-links">
+                        <a href="#services" class="footer-link">Air Freight</a>
+                        <a href="#services" class="footer-link">Road Transport</a>
+                        <a href="#services" class="footer-link">Smart Storage</a>
+                        <a href="#services" class="footer-link">Cold Chain Logistics</a>
+                        <a href="#estimator" class="footer-link">Cost Estimator</a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="footer-heading">Subscribe Newsletter</h4>
+                    <p class="footer-newsletter-text">Receive reports on logistics, fuel optimizations, and industrial transport updates.</p>
+                    <form class="footer-form" id="newsletterForm">
+                        <input type="email" class="form-control" placeholder="business@email.com" required>
+                        <button type="submit" class="btn btn-primary" aria-label="Subscribe"><i data-lucide="send"></i></button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 SmartMove Logistics Solutions Pvt. Ltd. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#" onclick="openPortal('admin')">Admin Panel Access</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==========================================
+       16. LIVE CHAT WIDGET
+       ========================================== -->
+    <div class="chat-widget" id="chatWidget">
+        <button class="chat-trigger" id="chatTrigger" aria-label="Open Chat Help">
+            <i data-lucide="message-square"></i>
+        </button>
+        
+        <div class="chat-box">
+            <div class="chat-header">
+                <div class="chat-header-avatar">
+                    <i data-lucide="bot"></i>
+                </div>
+                <div class="chat-header-info">
+                    <div class="chat-header-title">SmartBot AI</div>
+                    <div class="chat-header-status">Online assistance (Simulated)</div>
+                </div>
+            </div>
+            
+            <div class="chat-messages" id="chatMessagesContainer">
+                <div class="chat-msg bot">
+                    Namaste! Welcome to SmartMove Logistics. How can I help you today? You can ask me about:
+                    <br><strong style="color:var(--color-primary-light);">pricing</strong>, <strong style="color:var(--color-primary-light);">tracking</strong>, or <strong style="color:var(--color-primary-light);">routes</strong>.
+                </div>
+            </div>
+            
+            <div class="chat-input-area">
+                <input type="text" class="chat-input" id="chatInput" placeholder="Type a query...">
+                <button class="chat-send-btn" id="chatSendBtn" aria-label="Send Message">
+                    <i data-lucide="send" style="width: 16px; height: 16px;"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+       17. PORTALS BACKDROP CONTAINER (MODALS)
+       ========================================== -->
+    <div class="portal-backdrop" id="portalBackdrop">
+        <div class="portal-window">
+            <div class="portal-header">
+                <div class="portal-branding">
+                    <div class="logo-icon"><i data-lucide="route"></i></div>
+                    <span class="portal-title" id="portalHeaderTitle">Client Console</span>
+                </div>
+                <button class="portal-close-btn" id="portalCloseBtn" aria-label="Close Portal">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+
+            <div class="portal-layout">
+                <!-- Sidebar navigation for the active portal -->
+                <aside class="portal-sidebar">
+                    <div class="portal-menu" id="portalSidebarMenu">
+                        <!-- Filled dynamically based on Customer vs Admin selection -->
+                    </div>
+                    <div class="portal-user-info" style="font-size:0.8125rem; color:var(--text-muted);">
+                        <i data-lucide="user-check" style="vertical-align:middle;"></i> <span id="portalUserStatus">Active Session</span>
+                    </div>
+                </aside>
+
+                <!-- Core portal content area -->
+                <main class="portal-body">
+                    <!-- ==========================================
+                         CUSTOMER DASHBOARD PANES
+                         ========================================== -->
+                    <div class="portal-pane active" id="paneCustomerOverview">
+                        <div class="dashboard-grid">
+                            <div class="dashboard-stat-card">
+                                <div class="dashboard-stat-icon primary"><i data-lucide="wallet"></i></div>
+                                <div class="dashboard-stat-info">
+                                    <h4>Wallet Balance</h4>
+                                    <div class="dashboard-stat-value">₹ 14,500.00</div>
+                                </div>
+                            </div>
+                            <div class="dashboard-stat-card">
+                                <div class="dashboard-stat-icon accent"><i data-lucide="package-search"></i></div>
+                                <div class="dashboard-stat-info">
+                                    <h4>Active Orders</h4>
+                                    <div class="dashboard-stat-value" id="dashCustomerActiveCount">1</div>
+                                </div>
+                            </div>
+                            <div class="dashboard-stat-card">
+                                <div class="dashboard-stat-icon success"><i data-lucide="check-circle-2"></i></div>
+                                <div class="dashboard-stat-info">
+                                    <h4>Completed Cargo</h4>
+                                    <div class="dashboard-stat-value">12</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-panel-header">
+                            <h3 class="dashboard-panel-title">Active Logistics Shipments</h3>
+                            <button class="btn btn-accent btn-table-action" onclick="closePortal(); location.href='#estimator'">+ Book New</button>
+                        </div>
+                        <div class="table-wrapper">
+                            <table class="dashboard-table">
+                                <thead>
+                                    <tr>
+                                        <th>Shipment ID</th>
+                                        <th>Route</th>
+                                        <th>Type</th>
+                                        <th>Cost</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="dashCustomerShipmentTable">
+                                    <!-- Filled dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="portal-pane" id="paneCustomerSettings">
+                        <h3 class="dashboard-panel-title" style="margin-bottom:1.5rem;">API Keys & Webhooks</h3>
+                        <p style="color:var(--text-secondary); margin-bottom:1.5rem;">Developers can link our real-time transit telemetry directly into their enterprise dashboards.</p>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Production API Key</label>
+                            <div style="display:flex; gap:0.5rem;">
+                                <input type="text" class="form-control" readonly value="sm_live_98ab45d82910cd93f8e12154">
+                                <button class="btn btn-secondary" onclick="alert('API key copied to clipboard!')">Copy</button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Webhook URL for Tracking updates</label>
+                            <input type="text" class="form-control" placeholder="https://api.yourdomain.com/webhooks/smartmove">
+                        </div>
+                        <button class="btn btn-primary">Save API Configuration</button>
+                    </div>
+
+                    <div class="portal-pane" id="paneCustomerSupport">
+                        <h3 class="dashboard-panel-title" style="margin-bottom:1.5rem;">Submit a Help Ticket</h3>
+                        <form id="dashSupportForm">
+                            <div class="form-group">
+                                <label class="form-label" for="supportSubject">Subject / Shipment Reference</label>
+                                <input type="text" class="form-control" id="supportSubject" placeholder="Delay in delivery - SMART-987-654" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="supportDetails">Provide details</label>
+                                <textarea class="form-control" id="supportDetails" rows="4" placeholder="Explain your query..." required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-accent">Submit Support Ticket</button>
+                        </form>
+                    </div>
+
+                    <!-- ==========================================
+                         ADMIN DASHBOARD PANES
+                         ========================================== -->
+                    <div class="portal-pane" id="paneAdminOverview">
+                        <div class="dashboard-grid">
+                            <div class="dashboard-stat-card">
+                                <div class="dashboard-stat-icon primary"><i data-lucide="indian-rupee"></i></div>
+                                <div class="dashboard-stat-info">
+                                    <h4>Total Revenue</h4>
+                                    <div class="dashboard-stat-value" id="dashAdminRevenue">₹ 2,45,390.00</div>
+                                </div>
+                            </div>
+                            <div class="dashboard-stat-card">
+                                <div class="dashboard-stat-icon accent"><i data-lucide="shield-alert"></i></div>
+                                <div class="dashboard-stat-info">
+                                    <h4>Active Shipments</h4>
+                                    <div class="dashboard-stat-value" id="dashAdminActiveCount">3</div>
+                                </div>
+                            </div>
+                            <div class="dashboard-stat-card">
+                                <div class="dashboard-stat-icon success"><i data-lucide="mail"></i></div>
+                                <div class="dashboard-stat-info">
+                                    <h4>Inquiries Logged</h4>
+                                    <div class="dashboard-stat-value" id="dashAdminInquiryCount">1</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-panel-header">
+                            <h3 class="dashboard-panel-title">Master Control: Update Shipments</h3>
+                            <p style="font-size:0.875rem; color:var(--text-muted);">Change statuses here to update the live tracking timeline simulator.</p>
+                        </div>
+                        
+                        <div class="table-wrapper">
+                            <table class="dashboard-table">
+                                <thead>
+                                    <tr>
+                                        <th>Shipment ID</th>
+                                        <th>Sender/Receiver</th>
+                                        <th>Route</th>
+                                        <th>Type</th>
+                                        <th>Live Status Control</th>
+                                        <th>Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="dashAdminShipmentTable">
+                                    <!-- Filled dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="portal-pane" id="paneAdminInquiries">
+                        <h3 class="dashboard-panel-title" style="margin-bottom:1.5rem;">Corporate Messages Inbox</h3>
+                        <div class="table-wrapper">
+                            <table class="dashboard-table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Message Requirements</th>
+                                        <th>Received At</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="dashAdminInquiryTable">
+                                    <!-- Filled dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <!-- Career Apply Modal -->
+    <div class="portal-backdrop" id="careerModal" style="z-index:2500;">
+        <div class="portal-window" style="max-width:550px; height:auto; max-height:90vh; margin:auto;">
+            <div class="portal-header">
+                <div class="portal-branding">
+                    <i data-lucide="briefcase" style="color:var(--color-accent);"></i>
+                    <span class="portal-title">Apply for Position</span>
+                </div>
+                <button class="portal-close-btn" onclick="closeCareerModal()">&times;</button>
+            </div>
+            <div class="portal-body" style="background-color:var(--bg-surface);">
+                <h4 id="jobModalTitle" style="margin-bottom:1.25rem;">Job Title</h4>
+                <form id="careerApplyForm">
+                    <div class="form-group">
+                        <label class="form-label" for="applyName">Full Name</label>
+                        <input type="text" class="form-control" id="applyName" required placeholder="Rahul Verma">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="applyEmail">Email Address</label>
+                        <input type="email" class="form-control" id="applyEmail" required placeholder="rahul@domain.com">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="applyResume">Resume Link / Cover Note</label>
+                        <textarea class="form-control" id="applyResume" rows="3" required placeholder="Tell us about your experience..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-accent" style="width:100%;">Submit Application</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+       18. JAVASCRIPT & LOGIC LINKS
+       ========================================== -->
+    <!-- Lucide icons package -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="app.js"></script>
+</body>
+</html>
